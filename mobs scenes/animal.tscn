@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://ba83gwn0lhipb"]
+
+[ext_resource type="Script" uid="uid://dbbucex8151jx" path="res://scripts/Mob.cs" id="1_8xix8"]
+[ext_resource type="Texture2D" uid="uid://ct2762k6dmf4h" path="res://icon.svg" id="2_xvp3g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_23vr7"]
+size = Vector2(128, 128)
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+collision_mask = 16
+script = ExtResource("1_8xix8")
+Speed = 20.0
+IdleTimeMax = 3.0
+IdleTimeMin = 1.8
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_xvp3g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.1, 0.1)
+shape = SubResource("RectangleShape2D_23vr7")
+
+[node name="MovementTimer" type="Timer" parent="."]
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="ActionTimer" type="Timer" parent="."]

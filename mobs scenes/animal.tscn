@@ -24,5 +24,7 @@ shape = SubResource("RectangleShape2D_23vr7")
 [node name="MovementTimer" type="Timer" parent="."]
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 3.0
+target_desired_distance = 2.0
 
 [node name="ActionTimer" type="Timer" parent="."]

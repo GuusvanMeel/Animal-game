@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://brory31wivcn4"]
 
 [ext_resource type="Texture2D" uid="uid://dxcjs43g3aaot" path="res://Assets/Images/Boulder.png" id="1_fdoo7"]
-[ext_resource type="Script" uid="uid://bddwlriwix8la" path="res://scripts/SlamObstacle.cs" id="1_u0yen"]
+[ext_resource type="Script" uid="uid://dn11ftop44tnv" path="res://scripts/BreakableObstacle.cs" id="1_u0yen"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0yen"]
 size = Vector2(12, 11)

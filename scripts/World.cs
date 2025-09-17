@@ -1,9 +1,11 @@
 using Godot;
 using System;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 public partial class World : Node
-{
-    public Mob AssignMobToSlamObstacle(SlamObstacle target)
+{   
+    public Mob AssignMobToObstacle(BreakableObstacle target)
     {
 
         Mob nearest = null;
@@ -11,7 +13,7 @@ public partial class World : Node
 
         foreach (var mob in GetTree().GetNodesInGroup("mobs"))
         {
-            if (mob is Mob m && m.CanSlam && m.isBusy == false) // custom bool property
+            if (mob is Mob m && m.CanBreakType == target.RequiredBreakType && m.isBusy == false) // custom bool property
             {
                 float dist = m.GlobalPosition.DistanceTo(target.GlobalPosition);
                 if (dist < bestDist)
@@ -25,13 +27,18 @@ public partial class World : Node
         if (nearest != null)
         {
             GD.Print($"Assigning {nearest.Name} to break {target.Name}");
-            nearest.GoToWork(target);
-
+            bool succes = nearest.GoToWork(target);
+            if (succes == false)
+            {
+                GD.Print("Nearest couldnt find a path");
+                return null;
+            }
         }
         return nearest;
     }
-    public void DismissMobFromSlamObstacle(SlamObstacle obstacle)
+    public void DismissMobFromObstacle(BreakableObstacle obstacle)
     {
         obstacle.assignedMob.WorkDismissed();
     }
+    
 }

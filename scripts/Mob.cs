@@ -9,12 +9,11 @@ public partial class Mob : CharacterBody2D
     [Export] public float MoveTimeMin { get; set; } = 0.5f;
     [Export] public float IdleTimeMax { get; set; } = 1.6f;
     [Export] public float IdleTimeMin { get; set; } = 1f;
-    [Export] public bool CanSlam { get; set; } = true;
+    [Export] public BreakType CanBreakType { get; set; } 
 
 
-    private SlamObstacle currentTarget;
+    private BreakableObstacle currentTarget;
     private NavigationAgent2D agent;
-
 
     private Timer idleTimer;
     private Timer actionTimer;
@@ -25,6 +24,12 @@ public partial class Mob : CharacterBody2D
 
     public bool isBusy = false;
     private bool isWorking = false;
+    private static readonly Vector2I[] SurroundOffsets = new Vector2I[]
+{
+    new Vector2I(-1, -1), new Vector2I(0, -1), new Vector2I(1, -1),
+    new Vector2I(-1,  0),                     new Vector2I(1,  0),
+    new Vector2I(-1,  1), new Vector2I(0,  1), new Vector2I(1,  1),
+};
 
     public override void _Ready()
     {
@@ -39,7 +44,7 @@ public partial class Mob : CharacterBody2D
         actionTimer.Timeout += OnActionFinished;
         idleTimer.Timeout += OnidleTimeout;
         agent.TargetReached += OnTargetReached;
-        agent.TargetDesiredDistance = 15f; // how close to goal counts as "arrived"
+        agent.TargetDesiredDistance = 0.5f; //how close to goal counts as "arrived"
         agent.PathDesiredDistance = 4f; // tolerance for following path
         float IdleTime = rng.RandfRange(IdleTimeMin, IdleTimeMax);
         GD.Print(IdleTime);
@@ -48,7 +53,10 @@ public partial class Mob : CharacterBody2D
     }
 
     public override void _PhysicsProcess(double delta)
-    {  
+    {   var path = agent.GetCurrentNavigationPath();
+GD.Print($"Path for {Name}: {path.Length} points");
+foreach (var p in path)
+    GD.Print($"  {p}");
         if (isWorking)
         {
             Velocity = Vector2.Zero;
@@ -98,15 +106,13 @@ public partial class Mob : CharacterBody2D
             if (TestMove(GlobalTransform, testOffset))
             {
                 // Blocked immediately → go back to idle instead of moving
-                GD.Print("blocked by wall");
                 StopMoving();
                 return;
             }
 
             // Otherwise start moving
             isMoving = true;
-            float movetime = rng.RandfRange(MoveTimeMin, MoveTimeMax);
-            GD.Print("MoveTime is:" + movetime);
+            float movetime = rng.RandfRange(MoveTimeMin, MoveTimeMax);            
             idleTimer.WaitTime = movetime;
             idleTimer.Start();
         }
@@ -115,17 +121,45 @@ public partial class Mob : CharacterBody2D
     {
         isMoving = false;
         float IdleTime = rng.RandfRange(IdleTimeMin, IdleTimeMax);
-        GD.Print("Idletime is:" + IdleTime);
         idleTimer.WaitTime = IdleTime;
         idleTimer.Start();
     }
-    public void GoToWork(SlamObstacle target)
+    public bool GoToWork(BreakableObstacle target)
     {
         sprite.Modulate = Colors.Purple;
         isBusy = true;
         currentTarget = target;
-        agent.TargetPosition = target.GlobalPosition;
-    }
+        float cellSize = 16f;
+
+        Vector2 bestPos = target.GlobalPosition;
+        float bestDist = float.MaxValue;
+
+        foreach (var offset in SurroundOffsets)
+        {
+            Vector2 candidate = target.GlobalPosition + (Vector2)offset * cellSize;
+
+            // Snap to nearest navmesh point
+            Vector2 navPoint = NavigationServer2D.MapGetClosestPoint(agent.GetNavigationMap(), candidate);
+
+            float dist = GlobalPosition.DistanceTo(navPoint);
+            if (dist < bestDist)
+            {
+                bestDist = dist;
+                bestPos = navPoint;
+            }
+        }
+
+        agent.TargetPosition = bestPos;
+
+        if (agent.GetNextPathPosition() == this.GlobalPosition)
+        {
+            GD.Print($"{Name}: No path to {target.Name}");
+            WorkDismissed();        // reset state
+            return false;
+        }
+        return true;
+
+}
     public void WorkDismissed()
     {
         sprite.Modulate = Colors.White;
@@ -137,7 +171,7 @@ public partial class Mob : CharacterBody2D
     {
         GD.Print("Reached obstacle, slamming now!");
         isWorking = true;
-
+        Velocity = Vector2.Zero;
         if (currentTarget != null)
         {
             actionTimer.Start(3.0);

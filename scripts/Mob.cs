@@ -12,9 +12,11 @@ public partial class Mob : CharacterBody2D
     [Export] public BreakType CanBreakType { get; set; } 
 
 
+
     private BreakableObstacle currentTarget;
     private NavigationAgent2D agent;
-
+    private AnimationPlayer animationPlayer;
+    private Skeleton2D skeleton;
     private Timer idleTimer;
     private Timer actionTimer;
     private Vector2 direction = Vector2.Zero;
@@ -35,11 +37,13 @@ public partial class Mob : CharacterBody2D
     {
         agent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 
-        sprite = GetNode<Sprite2D>("Sprite2D");
+        sprite = GetNode<Sprite2D>("Skeleton2D/TorsoBone/Sprite2D");
         AddToGroup("mobs");
         rng.Randomize();
         idleTimer = GetNode<Timer>("MovementTimer");
         actionTimer = GetNode<Timer>("ActionTimer");
+        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        skeleton = GetNode<Skeleton2D>("Skeleton2D");
         actionTimer.OneShot = true;
         actionTimer.Timeout += OnActionFinished;
         idleTimer.Timeout += OnidleTimeout;
@@ -53,40 +57,55 @@ public partial class Mob : CharacterBody2D
     }
 
     public override void _PhysicsProcess(double delta)
-    {   var path = agent.GetCurrentNavigationPath();
-GD.Print($"Path for {Name}: {path.Length} points");
-foreach (var p in path)
-    GD.Print($"  {p}");
-        if (isWorking)
-        {
-            Velocity = Vector2.Zero;
-            return;
-        }
+{
+    if (isWorking)
+    {
+        Velocity = Vector2.Zero;
+        return;
+    }
 
-        if (isBusy && currentTarget != null)
-        {
-            Vector2 nextPoint = agent.GetNextPathPosition();
-            Vector2 dir = (nextPoint - GlobalPosition).Normalized();
-            Velocity = dir * Speed;
-            MoveAndSlide();
-            return; // don’t also do wander logic
-        }
-        if (isMoving)
-        {
-            Velocity = direction * Speed;
-            MoveAndSlide();
-            if (GetSlideCollisionCount() > 0)
-            {
-                GD.Print("Collided");
-                StopMoving();
+    if (isBusy && currentTarget != null)
+    {
+        Vector2 nextPoint = agent.GetNextPathPosition();
+        Vector2 dir = (nextPoint - GlobalPosition).Normalized();
+        Velocity = dir * Speed;
+        MoveAndSlide();
+    }
+    else if (isMoving)
+    {
+        Velocity = direction * Speed;
+        MoveAndSlide();
 
-            }
-        }
-        else
+        if (GetSlideCollisionCount() > 0)
         {
-            Velocity = Vector2.Zero;
+            GD.Print("Collided");
+            StopMoving();
         }
     }
+    else
+    {
+        Velocity = Vector2.Zero;
+    }
+
+    // --- Handle animation ---
+    if (Velocity.Length() > 1) // mob is moving
+    {
+        if (!animationPlayer.IsPlaying())
+            animationPlayer.Play("TestAnim");
+
+        // Flip skeleton based on direction
+        if (Velocity.X < 0)
+            skeleton.Scale = new Vector2(1, 1);  // facing right
+        else if (Velocity.X > 0)
+            skeleton.Scale = new Vector2(-1, 1); // facing left
+    }
+    else
+    {
+        if (animationPlayer.IsPlaying())
+            animationPlayer.Stop();
+    }
+}
+
     private void OnidleTimeout()
     {
         if (isMoving)

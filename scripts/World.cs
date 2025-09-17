@@ -13,7 +13,7 @@ public partial class World : Node
 
         foreach (var mob in GetTree().GetNodesInGroup("mobs"))
         {
-            if (mob is Mob m && m.CanBreakType == target.RequiredBreakType && m.isBusy == false) // custom bool property
+            if (mob is Mob m && (m.CanBreakType & target.RequiredBreakType) != 0 && m.isBusy == false) // custom bool property
             {
                 float dist = m.GlobalPosition.DistanceTo(target.GlobalPosition);
                 if (dist < bestDist)

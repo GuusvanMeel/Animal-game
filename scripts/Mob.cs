@@ -9,7 +9,8 @@ public partial class Mob : CharacterBody2D
     [Export] public float MoveTimeMin { get; set; } = 0.5f;
     [Export] public float IdleTimeMax { get; set; } = 1.6f;
     [Export] public float IdleTimeMin { get; set; } = 1f;
-    [Export] public BreakType CanBreakType { get; set; } 
+    [Export] public BreakType CanBreakType { get; set; }
+
 
 
 
@@ -37,7 +38,7 @@ public partial class Mob : CharacterBody2D
     {
         agent = GetNode<NavigationAgent2D>("NavigationAgent2D");
 
-        sprite = GetNode<Sprite2D>("Skeleton2D/TorsoBone/Sprite2D");
+        sprite = GetNode<Sprite2D>("Skeleton2D/TorsoBone/TorsoSprite");
         AddToGroup("mobs");
         rng.Randomize();
         idleTimer = GetNode<Timer>("MovementTimer");
@@ -48,7 +49,7 @@ public partial class Mob : CharacterBody2D
         actionTimer.Timeout += OnActionFinished;
         idleTimer.Timeout += OnidleTimeout;
         agent.TargetReached += OnTargetReached;
-        agent.TargetDesiredDistance = 0.5f; //how close to goal counts as "arrived"
+        agent.TargetDesiredDistance = 1f; //how close to goal counts as "arrived"
         agent.PathDesiredDistance = 4f; // tolerance for following path
         float IdleTime = rng.RandfRange(IdleTimeMin, IdleTimeMax);
         GD.Print(IdleTime);
@@ -59,9 +60,14 @@ public partial class Mob : CharacterBody2D
     public override void _PhysicsProcess(double delta)
 {
     if (isWorking)
-    {
-        Velocity = Vector2.Zero;
-        return;
+    {   if (Velocity != Vector2.Zero)
+            {
+            Velocity = Vector2.Zero;
+
+            animationPlayer.Stop();
+            }
+       
+            return;
     }
 
     if (isBusy && currentTarget != null)
@@ -91,10 +97,10 @@ public partial class Mob : CharacterBody2D
     if (Velocity.Length() > 1) // mob is moving
     {
         if (!animationPlayer.IsPlaying())
-            animationPlayer.Play("TestAnim");
+                animationPlayer.Play("NoLegJointWalkingAnim");
 
-        // Flip skeleton based on direction
-        if (Velocity.X < 0)
+            // Flip skeleton based on direction
+            if (Velocity.X < 0)
             skeleton.Scale = new Vector2(1, 1);  // facing right
         else if (Velocity.X > 0)
             skeleton.Scale = new Vector2(-1, 1); // facing left
@@ -145,6 +151,7 @@ public partial class Mob : CharacterBody2D
     }
     public bool GoToWork(BreakableObstacle target)
     {
+
         sprite.Modulate = Colors.Purple;
         isBusy = true;
         currentTarget = target;
@@ -182,15 +189,18 @@ public partial class Mob : CharacterBody2D
     public void WorkDismissed()
     {
         sprite.Modulate = Colors.White;
-        isBusy = false;
+
         isWorking = false;
         currentTarget = null;
+        isBusy = false;
     }
     private void OnTargetReached()
     {
+        GD.Print(this.Position.X + this.Position.Y);
         GD.Print("Reached obstacle, slamming now!");
         isWorking = true;
-        Velocity = Vector2.Zero;
+        isBusy = false;
+
         if (currentTarget != null)
         {
             actionTimer.Start(3.0);

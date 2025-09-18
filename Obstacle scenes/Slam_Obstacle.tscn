@@ -19,4 +19,5 @@ shape = SubResource("RectangleShape2D_u0yen")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
 radius = 8.0
+affect_navigation_mesh = true
 carve_navigation_mesh = true

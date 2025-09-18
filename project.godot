@@ -22,3 +22,7 @@ project/assembly_name="animal game"
 [layer_names]
 
 2d_physics/layer_5="Obstacles"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

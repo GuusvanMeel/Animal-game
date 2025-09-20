@@ -199,7 +199,7 @@ public partial class Mob : CharacterBody2D
         GD.Print(this.Position.X + this.Position.Y);
         GD.Print("Reached obstacle, slamming now!");
         isWorking = true;
-        isBusy = false;
+        
 
         if (currentTarget != null)
         {

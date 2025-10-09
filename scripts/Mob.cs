@@ -4,7 +4,7 @@ using System.Data.SqlTypes;
 
 public partial class Mob : CharacterBody2D
 {
-    [Export] public float Speed { get; set; } = 100f;
+    [Export] public float Speed { get; set; } = 300f;
     [Export] public float MoveTimeMax { get; set; } = 2f;
     [Export] public float MoveTimeMin { get; set; } = 0.5f;
     [Export] public float IdleTimeMax { get; set; } = 1.6f;
@@ -51,6 +51,7 @@ public partial class Mob : CharacterBody2D
         agent.TargetReached += OnTargetReached;
         agent.TargetDesiredDistance = 1f; //how close to goal counts as "arrived"
         agent.PathDesiredDistance = 4f; // tolerance for following path
+        agent.PathChanged += OnPathChanged; // new, handle path readiness
         float IdleTime = rng.RandfRange(IdleTimeMin, IdleTimeMax);
         GD.Print(IdleTime);
         idleTimer.WaitTime = IdleTime;
@@ -58,59 +59,85 @@ public partial class Mob : CharacterBody2D
     }
 
     public override void _PhysicsProcess(double delta)
-{
-    if (isWorking)
-    {   if (Velocity != Vector2.Zero)
-            {
-            Velocity = Vector2.Zero;
-
-            animationPlayer.Stop();
-            }
-       
-            return;
-    }
-
-    if (isBusy && currentTarget != null)
     {
-        Vector2 nextPoint = agent.GetNextPathPosition();
-        Vector2 dir = (nextPoint - GlobalPosition).Normalized();
-        Velocity = dir * Speed;
-        MoveAndSlide();
-    }
-    else if (isMoving)
-    {
-        Velocity = direction * Speed;
-        MoveAndSlide();
-
-        if (GetSlideCollisionCount() > 0)
+        QueueRedraw();
+        if (isWorking)
         {
-            GD.Print("Collided");
-            StopMoving();
-        }
-    }
-    else
-    {
-        Velocity = Vector2.Zero;
-    }
+            if (Velocity != Vector2.Zero)
+            {
+                Velocity = Vector2.Zero;
 
-    // --- Handle animation ---
-    if (Velocity.Length() > 1) // mob is moving
-    {
-        if (!animationPlayer.IsPlaying())
+                animationPlayer.Stop();
+            }
+
+            return;
+        }
+
+        if (isBusy && currentTarget != null)
+        {
+            Vector2 nextPoint = agent.GetNextPathPosition();
+            Vector2 desiredVelocity = (nextPoint - GlobalPosition).Normalized() * Speed;
+
+            // Tell the agent what we're trying to do
+            agent.Velocity = desiredVelocity;
+
+            // Move the body using the agent's processed velocity (includes avoidance)
+            Velocity = agent.Velocity;
+            MoveAndSlide();
+
+        }
+        else if (isMoving)
+        {
+            Velocity = direction * Speed;
+            MoveAndSlide();
+
+            if (GetSlideCollisionCount() > 0)
+            {
+                GD.Print("Collided");
+                StopMoving();
+            }
+        }
+        else
+        {
+            Velocity = Vector2.Zero;
+        }
+
+        // --- Handle animation ---
+        if (Velocity.Length() > 1) // mob is moving
+        {
+            if (!animationPlayer.IsPlaying())
                 animationPlayer.Play("NoLegJointWalkingAnim");
 
             // Flip skeleton based on direction
             if (Velocity.X < 0)
-            skeleton.Scale = new Vector2(1, 1);  // facing right
-        else if (Velocity.X > 0)
-            skeleton.Scale = new Vector2(-1, 1); // facing left
+                skeleton.Scale = new Vector2(1, 1);  // facing right
+            else if (Velocity.X > 0)
+                skeleton.Scale = new Vector2(-1, 1); // facing left
+        }
+        else
+        {
+            if (animationPlayer.IsPlaying())
+                animationPlayer.Stop();
+        }
     }
-    else
+    public override void _Draw()
     {
-        if (animationPlayer.IsPlaying())
-            animationPlayer.Stop();
+        if (agent == null)
+            return;
+
+        var path = agent.GetCurrentNavigationPath();
+        if (path == null || path.Length < 2)
+            return;
+
+        // Draw the path lines in cyan
+        for (int i = 0; i < path.Length - 1; i++)
+            DrawLine(ToLocal(path[i]), ToLocal(path[i + 1]), Colors.Cyan, 2);
+
+        // Draw small circles for each path point
+        foreach (Vector2 point in path)
+            DrawCircle(ToLocal(point), 4, Colors.Red);
     }
-}
+
 
     private void OnidleTimeout()
     {
@@ -166,6 +193,7 @@ public partial class Mob : CharacterBody2D
 
             // Snap to nearest navmesh point
             Vector2 navPoint = NavigationServer2D.MapGetClosestPoint(agent.GetNavigationMap(), candidate);
+            Console.WriteLine(agent.GetNavigationMap());
 
             float dist = GlobalPosition.DistanceTo(navPoint);
             if (dist < bestDist)
@@ -177,12 +205,7 @@ public partial class Mob : CharacterBody2D
 
         agent.TargetPosition = bestPos;
 
-        if (agent.GetNextPathPosition() == this.GlobalPosition)
-        {
-            GD.Print($"{Name}: No path to {target.Name}");
-            WorkDismissed();        // reset state
-            return false;
-        }
+
         return true;
 
 }
@@ -210,10 +233,17 @@ public partial class Mob : CharacterBody2D
     {
         if (currentTarget != null)
         {
-             currentTarget.Break(); // call obstacle’s break method
+            currentTarget.Break(); // call obstacle’s break method
         }
-       
+
         WorkDismissed();
-        
+
+    }
+    private void OnPathChanged()
+    {
+        if (agent.GetCurrentNavigationPath().Length == 0)
+            GD.Print($"{Name}: No valid path found!");
+        else
+            GD.Print($"{Name}: Path found, {agent.GetCurrentNavigationPath().Length} points");
     }
 }

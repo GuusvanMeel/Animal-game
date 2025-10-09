@@ -5,18 +5,18 @@ using System.Security.Cryptography.X509Certificates;
 
 public partial class World : Node
 {   
+   
     public Mob AssignMobToObstacle(BreakableObstacle target)
-    {
-
+        {
         Mob nearest = null;
         float bestDist = float.MaxValue;
 
-        foreach (var mob in GetTree().GetNodesInGroup("mobs"))
+        foreach (var mob in GetTree().GetNodesInGroup("mobs")) //get all the mobs in the scene.
         {
-            if (mob is Mob m && (m.CanBreakType & target.RequiredBreakType) != 0 && m.isBusy == false) // custom bool property
+            if (mob is Mob m && (m.CanBreakType & target.RequiredBreakType) != 0 && m.isBusy == false) // Check if the mob has correct type, and if its occupied
             {
                 float dist = m.GlobalPosition.DistanceTo(target.GlobalPosition);
-                if (dist < bestDist)
+                if (dist < bestDist) //cycles through all the mobs, lowest distance mob gets the job.
                 {
                     bestDist = dist;
                     nearest = m;

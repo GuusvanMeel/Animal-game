@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dn11ftop44tnv" path="res://scripts/BreakableObstacle.cs" id="1_u0yen"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u0yen"]
-size = Vector2(12, 11)
+size = Vector2(16, 16)
 
 [node name="SlamObstacle" type="StaticBody2D"]
 collision_layer = 16
@@ -16,3 +16,7 @@ texture = ExtResource("1_fdoo7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_u0yen")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+vertices = PackedVector2Array(8, 8, 8, -8, -8, -8, -8, 8)
+affect_navigation_mesh = true

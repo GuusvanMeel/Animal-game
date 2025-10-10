@@ -1,6 +1,7 @@
 using Godot;
 using System;
-using System.Data.SqlTypes;
+using System.Collections.Generic;
+
 
 public partial class Mob : CharacterBody2D
 {
@@ -12,10 +13,11 @@ public partial class Mob : CharacterBody2D
     [Export] public BreakType CanBreakType { get; set; }
 
 
+    private AStarGrid2D grid;
+
 
 
     private BreakableObstacle currentTarget;
-    private NavigationAgent2D agent;
     private AnimationPlayer animationPlayer;
     private Skeleton2D skeleton;
     private Timer idleTimer;
@@ -25,8 +27,10 @@ public partial class Mob : CharacterBody2D
     private RandomNumberGenerator rng = new RandomNumberGenerator();
     private Sprite2D sprite;
 
-    public bool isBusy = false;
-    private bool isWorking = false;
+    private Vector2[] currentPath;
+    private int pathIndex;
+    public bool WalkingToTarget = false;
+    private bool IsBreaking = false;
     private static readonly Vector2I[] SurroundOffsets = new Vector2I[]
 {
     new Vector2I(-1, -1), new Vector2I(0, -1), new Vector2I(1, -1),
@@ -36,7 +40,7 @@ public partial class Mob : CharacterBody2D
 
     public override void _Ready()
     {
-        agent = GetNode<NavigationAgent2D>("NavigationAgent2D");
+
 
         sprite = GetNode<Sprite2D>("Skeleton2D/TorsoBone/TorsoSprite");
         AddToGroup("mobs");
@@ -45,13 +49,10 @@ public partial class Mob : CharacterBody2D
         actionTimer = GetNode<Timer>("ActionTimer");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         skeleton = GetNode<Skeleton2D>("Skeleton2D");
+        
         actionTimer.OneShot = true;
         actionTimer.Timeout += OnActionFinished;
         idleTimer.Timeout += OnidleTimeout;
-        agent.TargetReached += OnTargetReached;
-        agent.TargetDesiredDistance = 1f; //how close to goal counts as "arrived"
-        agent.PathDesiredDistance = 4f; // tolerance for following path
-        agent.PathChanged += OnPathChanged; // new, handle path readiness
         float IdleTime = rng.RandfRange(IdleTimeMin, IdleTimeMax);
         GD.Print(IdleTime);
         idleTimer.WaitTime = IdleTime;
@@ -60,8 +61,7 @@ public partial class Mob : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        QueueRedraw();
-        if (isWorking)
+        if (IsBreaking)
         {
             if (Velocity != Vector2.Zero)
             {
@@ -73,18 +73,9 @@ public partial class Mob : CharacterBody2D
             return;
         }
 
-        if (isBusy && currentTarget != null)
+        if (WalkingToTarget && currentTarget != null)
         {
-            Vector2 nextPoint = agent.GetNextPathPosition();
-            Vector2 desiredVelocity = (nextPoint - GlobalPosition).Normalized() * Speed;
-
-            // Tell the agent what we're trying to do
-            agent.Velocity = desiredVelocity;
-
-            // Move the body using the agent's processed velocity (includes avoidance)
-            Velocity = agent.Velocity;
-            MoveAndSlide();
-
+            MoveToGridSpace();
         }
         else if (isMoving)
         {
@@ -120,23 +111,22 @@ public partial class Mob : CharacterBody2D
                 animationPlayer.Stop();
         }
     }
-    public override void _Draw()
+    private void MoveToGridSpace()
     {
-        if (agent == null)
-            return;
+        Vector2 desiredVelocity = (currentPath[pathIndex] - GlobalPosition).Normalized() * Speed;
+        Velocity = desiredVelocity;
+        MoveAndSlide();
+        if (GlobalPosition.DistanceTo(currentPath[pathIndex]) < 4f)
+        {
+            pathIndex++;
+            if(pathIndex >= currentPath.Length)
+            {
+                OnTargetReached();
+            }
+        }
 
-        var path = agent.GetCurrentNavigationPath();
-        if (path == null || path.Length < 2)
-            return;
-
-        // Draw the path lines in cyan
-        for (int i = 0; i < path.Length - 1; i++)
-            DrawLine(ToLocal(path[i]), ToLocal(path[i + 1]), Colors.Cyan, 2);
-
-        // Draw small circles for each path point
-        foreach (Vector2 point in path)
-            DrawCircle(ToLocal(point), 4, Colors.Red);
     }
+
 
 
     private void OnidleTimeout()
@@ -164,7 +154,7 @@ public partial class Mob : CharacterBody2D
 
             // Otherwise start moving
             isMoving = true;
-            float movetime = rng.RandfRange(MoveTimeMin, MoveTimeMax);            
+            float movetime = rng.RandfRange(MoveTimeMin, MoveTimeMax);
             idleTimer.WaitTime = movetime;
             idleTimer.Start();
         }
@@ -178,51 +168,50 @@ public partial class Mob : CharacterBody2D
     }
     public bool GoToWork(BreakableObstacle target)
     {
-
-        sprite.Modulate = Colors.Purple;
-        isBusy = true;
-        currentTarget = target;
-        float cellSize = 16f;
-
-        Vector2 bestPos = target.GlobalPosition;
-        float bestDist = float.MaxValue;
-
+        Vector2[] bestPath = null;
         foreach (var offset in SurroundOffsets)
         {
-            Vector2 candidate = target.GlobalPosition + (Vector2)offset * cellSize;
+            Vector2I targetCell = GridManager.ToCell(target.GlobalPosition, GridManager.TileSize);
+            Vector2I neighborCell = targetCell + offset;
 
-            // Snap to nearest navmesh point
-            Vector2 navPoint = NavigationServer2D.MapGetClosestPoint(agent.GetNavigationMap(), candidate);
-            Console.WriteLine(agent.GetNavigationMap());
-
-            float dist = GlobalPosition.DistanceTo(navPoint);
-            if (dist < bestDist)
+            if (!GridManager.Grid.IsPointSolid(neighborCell))
             {
-                bestDist = dist;
-                bestPos = navPoint;
+                // This neighbor is walkable, test path to it
+                Vector2I mobCell = GridManager.ToCell(GlobalPosition, GridManager.TileSize);
+                Vector2[] path = GridManager.Grid.GetPointPath(mobCell, neighborCell);
+
+                if (path.Length > 0)
+                {
+                    bestPath = GridManager.Grid.GetPointPath(mobCell, neighborCell);
+
+                }
+                if (bestPath != null)
+                {
+                    currentPath = bestPath;
+                    pathIndex = 0;
+                    WalkingToTarget = true;
+                    sprite.Modulate = Colors.Purple;
+                    currentTarget = target;
+                    return true;
+                }
             }
         }
-
-        agent.TargetPosition = bestPos;
-
-
-        return true;
-
-}
+        return false;
+    }
     public void WorkDismissed()
     {
         sprite.Modulate = Colors.White;
 
-        isWorking = false;
+        IsBreaking = false;
         currentTarget = null;
-        isBusy = false;
+        WalkingToTarget = false;
     }
     private void OnTargetReached()
     {
         GD.Print(this.Position.X + this.Position.Y);
         GD.Print("Reached obstacle, slamming now!");
-        isWorking = true;
-        
+        IsBreaking = true;
+
 
         if (currentTarget != null)
         {
@@ -239,11 +228,5 @@ public partial class Mob : CharacterBody2D
         WorkDismissed();
 
     }
-    private void OnPathChanged()
-    {
-        if (agent.GetCurrentNavigationPath().Length == 0)
-            GD.Print($"{Name}: No valid path found!");
-        else
-            GD.Print($"{Name}: Path found, {agent.GetCurrentNavigationPath().Length} points");
-    }
 }
+   

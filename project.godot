@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 project/assembly_name="animal game"
 
+[global_group]
+
+Obstacles="obstacles"
+
 [layer_names]
 
 2d_physics/layer_5="Obstacles"

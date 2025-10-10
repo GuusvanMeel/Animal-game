@@ -25,6 +25,74 @@ tile_set = ExtResource("1_d34w8")
 position = Vector2(520, 408)
 RequiredBreakType = 1
 
+[node name="SlamObstacle9" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(504, 312)
+RequiredBreakType = 1
+
+[node name="SlamObstacle10" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(520, 312)
+RequiredBreakType = 1
+
+[node name="SlamObstacle11" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(536, 312)
+RequiredBreakType = 1
+
+[node name="SlamObstacle12" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(552, 312)
+RequiredBreakType = 1
+
+[node name="SlamObstacle13" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(568, 312)
+RequiredBreakType = 1
+
+[node name="SlamObstacle15" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(536, 408)
+RequiredBreakType = 1
+
+[node name="SlamObstacle16" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(552, 408)
+RequiredBreakType = 1
+
+[node name="SlamObstacle17" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(568, 408)
+RequiredBreakType = 1
+
+[node name="SlamObstacle18" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(584, 408)
+RequiredBreakType = 1
+
+[node name="SlamObstacle19" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(600, 408)
+RequiredBreakType = 1
+
+[node name="SlamObstacle20" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(616, 408)
+RequiredBreakType = 1
+
+[node name="SlamObstacle21" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(616, 392)
+RequiredBreakType = 1
+
+[node name="SlamObstacle22" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(616, 376)
+RequiredBreakType = 1
+
+[node name="SlamObstacle23" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(616, 360)
+RequiredBreakType = 1
+
+[node name="SlamObstacle24" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(616, 344)
+RequiredBreakType = 1
+
+[node name="SlamObstacle25" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(616, 328)
+RequiredBreakType = 1
+
+[node name="SlamObstacle26" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(616, 312)
+RequiredBreakType = 1
+
 [node name="SlamObstacle2" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(504, 376)
 RequiredBreakType = 1

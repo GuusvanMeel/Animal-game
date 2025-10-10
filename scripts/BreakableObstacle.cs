@@ -18,10 +18,23 @@ public partial class BreakableObstacle : StaticBody2D
     private bool clicked = false;
     private Sprite2D sprite;
     public Mob assignedMob;
+    private Vector2I gridCell;
 
     public override void _Ready()
     {
         sprite = GetNode<Sprite2D>("Sprite2D");
+    }
+    public void RegisterOnGrid()
+    {
+        if (GridManager.Grid == null)
+        {
+            GD.Print("Grid not ready yet for obstacle!");
+            return;
+        }
+
+        gridCell = GridManager.ToCell(GlobalPosition, GridManager.TileSize);
+        GridManager.Grid.SetPointSolid(gridCell, true);
+        GD.Print("Set this block solid!");
     }
 
     public override void _InputEvent(Viewport viewport, InputEvent @event, int shapeIdx)
@@ -67,6 +80,7 @@ public partial class BreakableObstacle : StaticBody2D
     public void Break()
     {
         GD.Print($"{RequiredBreakType} obstacle destroyed!");
+        GridManager.Grid.SetPointSolid(gridCell, false);
         QueueFree();
     }
 }

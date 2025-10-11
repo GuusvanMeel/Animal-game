@@ -16,7 +16,6 @@ public partial class Mob : CharacterBody2D
     private AStarGrid2D grid;
 
 
-
     private BreakableObstacle currentTarget;
     private AnimationPlayer animationPlayer;
     private Skeleton2D skeleton;
@@ -61,6 +60,7 @@ public partial class Mob : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
+        QueueRedraw();
         if (IsBreaking)
         {
             if (Velocity != Vector2.Zero)
@@ -109,6 +109,30 @@ public partial class Mob : CharacterBody2D
         {
             if (animationPlayer.IsPlaying())
                 animationPlayer.Stop();
+        }
+    }
+    public override void _Draw()
+    {
+        // Skip if there's no path or fewer than 2 points
+        if (currentPath == null || currentPath.Length < 2)
+            return;
+
+        // Draw connecting lines between all path points
+        for (int i = 0; i < currentPath.Length - 1; i++)
+        {
+            DrawLine(
+                ToLocal(currentPath[i]),
+                ToLocal(currentPath[i + 1]),
+                Colors.Cyan,   // line color
+                2.0f           // line thickness
+            );
+        }
+
+        // Draw small circles for each waypoint
+        for (int i = 0; i < currentPath.Length; i++)
+        {
+            var color = i == pathIndex ? Colors.Yellow : Colors.Red; // highlight current target
+            DrawCircle(ToLocal(currentPath[i]), 4f, color);
         }
     }
     private void MoveToGridSpace()
@@ -166,6 +190,7 @@ public partial class Mob : CharacterBody2D
         idleTimer.WaitTime = IdleTime;
         idleTimer.Start();
     }
+
     public bool GoToWork(BreakableObstacle target)
     {
         Vector2[] bestPath = null;
@@ -182,22 +207,42 @@ public partial class Mob : CharacterBody2D
 
                 if (path.Length > 0)
                 {
-                    bestPath = GridManager.Grid.GetPointPath(mobCell, neighborCell);
+                    float totalDistance = GetPathLength(path);
 
+                    if (bestPath == null || totalDistance < GetPathLength(bestPath))
+                    {
+                        bestPath = path;
+                    }
                 }
-                if (bestPath != null)
+            }
+        }
+        if (bestPath != null)
                 {
+                    Vector2 tileCenterOffset = new Vector2(GridManager.TileSize / 2f, GridManager.TileSize / 2f);
                     currentPath = bestPath;
+                    for (int i = 0; i < currentPath.Length; i++)
+                    {
+                        currentPath[i] += tileCenterOffset;
+                    }
                     pathIndex = 0;
                     WalkingToTarget = true;
                     sprite.Modulate = Colors.Purple;
                     currentTarget = target;
                     return true;
                 }
-            }
-        }
         return false;
     }
+       private float GetPathLength(Vector2[] path)
+{
+    float total = 0f;
+
+    for (int i = 0; i < path.Length - 1; i++)
+    {
+        total += path[i].DistanceTo(path[i + 1]);
+    }
+
+    return total;
+}
     public void WorkDismissed()
     {
         sprite.Modulate = Colors.White;
@@ -218,6 +263,7 @@ public partial class Mob : CharacterBody2D
             actionTimer.Start(3.0);
         }
     }
+ 
     private void OnActionFinished()
     {
         if (currentTarget != null)

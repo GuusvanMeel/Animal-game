@@ -5,10 +5,11 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 
 public partial class World : Node
-{
+{   
     public override void _Ready()
     {
-        GridManager.InitializeGrid(new Vector2I(200, 200), 16);
+        TileMapLayer tilemap = GetNode<TileMapLayer>("NavigationRegion2D/Ground");
+        GridManager.InitializeGrid(new Vector2I(200, 200), 16, (Vector2I)(tilemap.Position / 16f));
         GridManager.Grid.Update();
         foreach (BreakableObstacle obstacle in GetTree().GetNodesInGroup("Obstacles"))
         {

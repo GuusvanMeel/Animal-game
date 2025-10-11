@@ -5,11 +5,11 @@ public static class GridManager
     public static AStarGrid2D Grid { get; private set; }
     public static int TileSize;
 
-    public static void InitializeGrid(Vector2I size, int tileSize)
+    public static void InitializeGrid(Vector2I size, int tileSize, Vector2I offset)
     {
         TileSize = tileSize;
         Grid = new AStarGrid2D();   
-        Grid.Region = new Rect2I(Vector2I.Zero, size);
+        Grid.Region = new Rect2I(offset, size);
         Grid.CellSize = new Vector2(tileSize, tileSize);
         Grid.DiagonalMode = AStarGrid2D.DiagonalModeEnum.OnlyIfNoObstacles;
         Grid.DefaultEstimateHeuristic = AStarGrid2D.Heuristic.Octile;

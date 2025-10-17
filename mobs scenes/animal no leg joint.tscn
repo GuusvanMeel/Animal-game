@@ -10,188 +10,14 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bkwno"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5t64o"]
-load_path = "res://.godot/imported/Pig Tail.png-534fbd3fba0be970469c41d3d3d30441.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bc46m"]
-load_path = "res://.godot/imported/Pig Torso.png-9524cd13411bb024849f90a02a6740dc.ctex"
-
 [sub_resource type="Animation" id="Animation_5t64o"]
 resource_name = "NoLegJointWalkingAnim"
 loop_mode = 1
 step = 0.016666668
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Skeleton2D/TorsoBone/HindLongLegBone:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.26666668),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, -0.13962634015954636]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Skeleton2D/TorsoBone/HindShortLegBone:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.26666668),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, -0.12217304763960309]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Skeleton2D/TorsoBone/FrontLongLegBone:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.26666668),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, -0.06981317007977318]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Skeleton2D/TorsoBone/FrontShortLegBone:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.26666668),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, -0.06981317007977318]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Skeleton2D/TorsoBone:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0.26666668, 0.6666667),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 2), Vector2(0, 0)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Skeleton2D/TorsoBone/HeadBone:rotation")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.33333334, 0.6666667),
-"transitions": PackedFloat32Array(1, 0.34151018, 0.8408965),
-"update": 0,
-"values": [0.0, -0.08726646259971647, -0.15707963267948966]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Skeleton2D/TorsoBone/TailBone:rotation")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.35, 0.6666667),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [-0.05235987755982989, -0.08726646259971647, 0.06981317007977318]
-}
 
 [sub_resource type="Animation" id="Animation_tuhc4"]
 length = 0.001
 step = 0.016666668
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Skeleton2D/TorsoBone/HindLongLegBone:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Skeleton2D/TorsoBone/FrontLongLegBone:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Skeleton2D/TorsoBone:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("Skeleton2D/TorsoBone/HindShortLegBone:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("Skeleton2D/TorsoBone/FrontShortLegBone:rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Skeleton2D/TorsoBone/TailBone:rotation")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Skeleton2D/TorsoBone/HeadBone:rotation")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bsaw0"]
 _data = {
@@ -200,8 +26,13 @@ _data = {
 &"TestAnim": ExtResource("7_ba0ss")
 }
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5t64o"]
+load_path = "res://.godot/imported/Pig Tail.png-534fbd3fba0be970469c41d3d3d30441.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bc46m"]
+load_path = "res://.godot/imported/Pig Torso.png-9524cd13411bb024849f90a02a6740dc.ctex"
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
-scale = Vector2(0.4, 0.4)
 collision_mask = 16
 script = ExtResource("1_bkwno")
 Speed = 20.0
@@ -223,76 +54,45 @@ avoidance_enabled = true
 
 [node name="ActionTimer" type="Timer" parent="."]
 
-[node name="Skeleton2D" type="Skeleton2D" parent="."]
-position = Vector2(0.25000095, 0)
-
-[node name="TorsoBone" type="Bone2D" parent="Skeleton2D"]
-rest = Transform2D(1, 0, 0, 1, 0, 1.111111)
-editor_settings/show_bone_gizmo = false
-
-[node name="TailBone" type="Bone2D" parent="Skeleton2D/TorsoBone"]
-position = Vector2(12, 1)
-scale = Vector2(0.9999994, 0.9999994)
-rest = Transform2D(0.998629, -0.05233593, 0.05233593, 0.998629, 12, 1)
-editor_settings/show_bone_gizmo = false
-
-[node name="TailSprite" type="Sprite2D" parent="Skeleton2D/TorsoBone/TailBone"]
-position = Vector2(2, -2.0000005)
-texture = SubResource("CompressedTexture2D_5t64o")
-
-[node name="HeadBone" type="Bone2D" parent="Skeleton2D/TorsoBone"]
-position = Vector2(-8, -4)
-rest = Transform2D(1, 0, 0, 1, -8, -4)
-editor_settings/show_bone_gizmo = false
-
-[node name="HeadSprite" type="Sprite2D" parent="Skeleton2D/TorsoBone/HeadBone"]
-position = Vector2(-3, -4)
-texture = ExtResource("3_0i86c")
-
-[node name="FrontShortLegBone" type="Bone2D" parent="Skeleton2D/TorsoBone"]
-position = Vector2(-6, 5.8888893)
-scale = Vector2(0.99999994, 0.99999994)
-rest = Transform2D(1, 0, 0, 1, -6, 5.8888893)
-editor_settings/show_bone_gizmo = false
-
-[node name="FrontShortLeg" type="Sprite2D" parent="Skeleton2D/TorsoBone/FrontShortLegBone"]
-position = Vector2(-1, 4)
-texture = ExtResource("4_g65lv")
-
-[node name="FrontLongLegBone" type="Bone2D" parent="Skeleton2D/TorsoBone"]
-position = Vector2(-10, 3.8888888)
-scale = Vector2(0.99999994, 0.99999994)
-rest = Transform2D(1, 0, 0, 1, -10, 3.8888888)
-editor_settings/show_bone_gizmo = false
-
-[node name="FrontLongLeg" type="Sprite2D" parent="Skeleton2D/TorsoBone/FrontLongLegBone"]
-position = Vector2(0, 4)
-texture = ExtResource("5_y1iu7")
-
-[node name="HindShortLegBone" type="Bone2D" parent="Skeleton2D/TorsoBone"]
-position = Vector2(6, 5.8888893)
-scale = Vector2(0.99999994, 0.99999994)
-rest = Transform2D(1, 0, 0, 1, 6, 5.8888893)
-editor_settings/show_bone_gizmo = false
-
-[node name="HindShortLeg" type="Sprite2D" parent="Skeleton2D/TorsoBone/HindShortLegBone"]
-position = Vector2(0, 3)
-texture = ExtResource("6_ba0ss")
-
-[node name="HindLongLegBone" type="Bone2D" parent="Skeleton2D/TorsoBone"]
-position = Vector2(10, 2.8888893)
-scale = Vector2(0.9999998, 0.9999998)
-rest = Transform2D(0.9999999, 0, 0, 0.9999999, 10, 2.8888893)
-editor_settings/show_bone_gizmo = false
-
-[node name="HindLongLeg" type="Sprite2D" parent="Skeleton2D/TorsoBone/HindLongLegBone"]
-position = Vector2(-2.3841858e-07, 4.000001)
-texture = ExtResource("7_m8g21")
-
-[node name="TorsoSprite" type="Sprite2D" parent="Skeleton2D/TorsoBone"]
-texture = SubResource("CompressedTexture2D_bc46m")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_bsaw0")
 }
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="TailSprite" type="Sprite2D" parent="Node2D"]
+position = Vector2(14.142586, 0.0091807535)
+rotation = -0.05235988
+scale = Vector2(0.99999934, 0.99999934)
+texture = SubResource("CompressedTexture2D_5t64o")
+
+[node name="HeadSprite" type="Sprite2D" parent="Node2D"]
+position = Vector2(-10.749998, -6.8888884)
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("3_0i86c")
+
+[node name="FrontShortLeg" type="Sprite2D" parent="Node2D"]
+position = Vector2(-6.749999, 10.999999)
+scale = Vector2(0.9999998, 0.9999998)
+texture = ExtResource("4_g65lv")
+
+[node name="FrontLongLeg" type="Sprite2D" parent="Node2D"]
+position = Vector2(-9.749998, 8.999999)
+scale = Vector2(0.9999998, 0.9999998)
+texture = ExtResource("5_y1iu7")
+
+[node name="HindShortLeg" type="Sprite2D" parent="Node2D"]
+position = Vector2(6.2500005, 9.999999)
+scale = Vector2(0.9999998, 0.9999998)
+texture = ExtResource("6_ba0ss")
+
+[node name="HindLongLeg" type="Sprite2D" parent="Node2D"]
+position = Vector2(10.25, 8)
+scale = Vector2(0.99999976, 0.99999976)
+texture = ExtResource("7_m8g21")
+
+[node name="TorsoSprite" type="Sprite2D" parent="Node2D"]
+position = Vector2(0.25000092, 1.1111109)
+scale = Vector2(0.99999994, 0.99999994)
+texture = SubResource("CompressedTexture2D_bc46m")

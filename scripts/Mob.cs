@@ -18,7 +18,7 @@ public partial class Mob : CharacterBody2D
 
     private BreakableObstacle currentTarget;
     private AnimationPlayer animationPlayer;
-    private Skeleton2D skeleton;
+    private Node2D skeleton;
     private Timer idleTimer;
     private Timer actionTimer;
     private Vector2 direction = Vector2.Zero;
@@ -41,13 +41,13 @@ public partial class Mob : CharacterBody2D
     {
 
 
-        sprite = GetNode<Sprite2D>("Skeleton2D/TorsoBone/TorsoSprite");
+        sprite = GetNode<Sprite2D>("Node2D/TorsoSprite");
         AddToGroup("mobs");
         rng.Randomize();
         idleTimer = GetNode<Timer>("MovementTimer");
         actionTimer = GetNode<Timer>("ActionTimer");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        skeleton = GetNode<Skeleton2D>("Skeleton2D");
+        skeleton = GetNode<Node2D>("Node2D");
         
         actionTimer.OneShot = true;
         actionTimer.Timeout += OnActionFinished;

@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://djvwrwye781no"]
+
+[ext_resource type="Script" uid="uid://bir6g417teh4u" path="res://scripts/UI/HUD.cs" id="1_etvyy"]
+
+[node name="CanvasLayer" type="CanvasLayer" node_paths=PackedStringArray("BreedButton")]
+script = ExtResource("1_etvyy")
+BreedButton = NodePath("Control/Button")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 952.0
+offset_right = 1151.0
+offset_bottom = 88.0
+text = "Spawn a new animal"

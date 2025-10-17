@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=4 uid="uid://dym8jw6glpwak"]
+[gd_scene load_steps=7 format=4 uid="uid://dym8jw6glpwak"]
 
 [ext_resource type="TileSet" uid="uid://c5jqmaislue86" path="res://Assets/Images/Tilemaps/Spring_TileSet.tres" id="1_d34w8"]
 [ext_resource type="Script" uid="uid://btrywfvaqty2v" path="res://scripts/World.cs" id="1_g6er4"]
 [ext_resource type="PackedScene" uid="uid://q6qrtx80qfmg" path="res://mobs scenes/animal no leg joint.tscn" id="3_14moa"]
 [ext_resource type="PackedScene" uid="uid://brory31wivcn4" path="res://Obstacle scenes/Slam_Obstacle.tscn" id="4_g6er4"]
+[ext_resource type="PackedScene" uid="uid://djvwrwye781no" path="res://UI Scenes/HUD.tscn" id="5_pakpm"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_g6er4"]
 vertices = PackedVector2Array(495, 319, 495, 417, 481, 369, 481, 351, 529, 417, 1150.9922, 647, 25, 647, 25, 8.9921875, 463, 369, 1143.0078, 1, 529, 399, 513, 399, 513, 319, 463, 351)
@@ -11,8 +12,10 @@ polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Arr
 outlines = Array[PackedVector2Array]([PackedVector2Array(24, 8, 24, 648, 1152, 648, 1144, 0)])
 agent_radius = 1.0
 
-[node name="World" type="Node2D"]
+[node name="World" type="Node2D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_g6er4")
+mobScene = ExtResource("3_14moa")
+camera = NodePath("Camera2D2")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 navigation_polygon = SubResource("NavigationPolygon_g6er4")
@@ -131,3 +134,5 @@ Speed = 100.0
 
 [node name="CharacterBody2D2" parent="." instance=ExtResource("3_14moa")]
 position = Vector2(568, 376)
+
+[node name="CanvasLayer" parent="." instance=ExtResource("5_pakpm")]

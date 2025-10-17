@@ -9,8 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://8c2prh4v768m" path="res://Assets/Animals/Pig/Legs/Pig Leg Back Long.png" id="7_m8g21"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bkwno"]
-radius = 98.69
-height = 229.63
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5t64o"]
 load_path = "res://.godot/imported/Pig Tail.png-534fbd3fba0be970469c41d3d3d30441.ctex"
@@ -203,6 +201,7 @@ _data = {
 }
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+scale = Vector2(0.4, 0.4)
 collision_mask = 16
 script = ExtResource("1_bkwno")
 Speed = 20.0
@@ -213,7 +212,6 @@ CanBreakType = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(9.536743e-07, 0.99999994)
-scale = Vector2(0.1, 0.1)
 shape = SubResource("CapsuleShape2D_bkwno")
 
 [node name="MovementTimer" type="Timer" parent="."]

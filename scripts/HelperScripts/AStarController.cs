@@ -24,11 +24,19 @@ public static class GridManager
 
         Grid.Update();
     }
-   public static Vector2I ToCell(Vector2 worldPos, int cellSize)
-{
-    return new Vector2I(
-        Mathf.FloorToInt(worldPos.X / cellSize),
-        Mathf.FloorToInt(worldPos.Y / cellSize)
-    );
-}
+    public static Vector2I ToCell(Vector2 worldPos, int cellSize) //changes a position to a cell in the grid
+    {
+        return new Vector2I(
+            Mathf.FloorToInt(worldPos.X / cellSize),
+            Mathf.FloorToInt(worldPos.Y / cellSize)
+        );
+    }
+    public static Vector2 CellToWorldCenter(Vector2I cell) //changes a cell to an actual tile inside the grid.
+    {
+        return (Vector2)cell * TileSize + new Vector2(TileSize / 2f, TileSize / 2f);
+    }
+public static bool IsObstacle(Vector2I cell)
+    {
+        return !Grid.IsPointSolid(cell);
+    }
 }

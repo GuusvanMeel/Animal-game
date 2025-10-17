@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=4 uid="uid://dym8jw6glpwak"]
+[gd_scene load_steps=8 format=4 uid="uid://dym8jw6glpwak"]
 
 [ext_resource type="TileSet" uid="uid://c5jqmaislue86" path="res://Assets/Images/Tilemaps/Spring_TileSet.tres" id="1_d34w8"]
 [ext_resource type="Script" uid="uid://btrywfvaqty2v" path="res://scripts/World.cs" id="1_g6er4"]
-[ext_resource type="PackedScene" uid="uid://q6qrtx80qfmg" path="res://mobs scenes/animal no leg joint.tscn" id="3_14moa"]
-[ext_resource type="PackedScene" uid="uid://brory31wivcn4" path="res://Obstacle scenes/Slam_Obstacle.tscn" id="4_g6er4"]
-[ext_resource type="PackedScene" uid="uid://djvwrwye781no" path="res://UI Scenes/HUD.tscn" id="5_pakpm"]
+[ext_resource type="PackedScene" uid="uid://ba83gwn0lhipb" path="res://Scenes/mobs scenes/animal.tscn" id="2_pakpm"]
+[ext_resource type="PackedScene" uid="uid://brory31wivcn4" path="res://Scenes/Obstacle scenes/Slam_Obstacle.tscn" id="4_g6er4"]
+[ext_resource type="PackedScene" uid="uid://halxm7rxo2w3" path="res://Scenes/Tile Scenes/Nest.tscn" id="5_6kv27"]
+[ext_resource type="PackedScene" uid="uid://djvwrwye781no" path="res://Scenes/UI Scenes/HUD.tscn" id="5_pakpm"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_g6er4"]
 vertices = PackedVector2Array(495, 319, 495, 417, 481, 369, 481, 351, 529, 417, 1150.9922, 647, 25, 647, 25, 8.9921875, 463, 369, 1143.0078, 1, 529, 399, 513, 399, 513, 319, 463, 351)
@@ -14,7 +15,7 @@ agent_radius = 1.0
 
 [node name="World" type="Node2D" node_paths=PackedStringArray("camera")]
 script = ExtResource("1_g6er4")
-mobScene = ExtResource("3_14moa")
+mobScene = ExtResource("2_pakpm")
 camera = NodePath("Camera2D2")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
@@ -26,113 +27,483 @@ tile_set = ExtResource("1_d34w8")
 
 [node name="SlamObstacle" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(520, 408)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle9" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(504, 312)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle10" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(520, 312)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle11" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(536, 312)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle12" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(552, 312)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle13" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(568, 312)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle15" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(536, 408)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle16" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(552, 408)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle17" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(568, 408)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle18" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(584, 408)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle19" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(600, 408)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle20" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(616, 408)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle21" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(616, 392)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle22" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(616, 376)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle23" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(616, 360)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle24" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(616, 344)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle25" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(616, 328)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle26" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(616, 312)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle2" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(504, 376)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle3" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(504, 360)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle6" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(504, 392)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle8" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(472, 360)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle4" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(504, 344)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle5" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(504, 328)
-RequiredBreakType = 1
+RequiredBreakType = 7
 
 [node name="SlamObstacle7" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(504, 408)
-RequiredBreakType = 1
+RequiredBreakType = 7
+
+[node name="SlamObstacle90" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 296)
+RequiredBreakType = 7
+
+[node name="SlamObstacle91" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 360)
+RequiredBreakType = 7
+
+[node name="SlamObstacle92" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 344)
+RequiredBreakType = 7
+
+[node name="SlamObstacle93" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 376)
+RequiredBreakType = 7
+
+[node name="SlamObstacle94" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 328)
+RequiredBreakType = 7
+
+[node name="SlamObstacle95" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 312)
+RequiredBreakType = 7
+
+[node name="SlamObstacle96" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 392)
+RequiredBreakType = 7
+
+[node name="SlamObstacle97" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 392)
+RequiredBreakType = 7
+
+[node name="SlamObstacle98" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 456)
+RequiredBreakType = 7
+
+[node name="SlamObstacle99" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 440)
+RequiredBreakType = 7
+
+[node name="SlamObstacle100" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 472)
+RequiredBreakType = 7
+
+[node name="SlamObstacle101" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 424)
+RequiredBreakType = 7
+
+[node name="SlamObstacle102" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 408)
+RequiredBreakType = 7
+
+[node name="SlamObstacle103" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle104" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle105" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 344)
+RequiredBreakType = 7
+
+[node name="SlamObstacle106" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 328)
+RequiredBreakType = 7
+
+[node name="SlamObstacle107" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 360)
+RequiredBreakType = 7
+
+[node name="SlamObstacle108" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 312)
+RequiredBreakType = 7
+
+[node name="SlamObstacle109" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 296)
+RequiredBreakType = 7
+
+[node name="SlamObstacle110" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 376)
+RequiredBreakType = 7
+
+[node name="SlamObstacle111" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 392)
+RequiredBreakType = 7
+
+[node name="SlamObstacle112" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 456)
+RequiredBreakType = 7
+
+[node name="SlamObstacle113" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 440)
+RequiredBreakType = 7
+
+[node name="SlamObstacle114" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 472)
+RequiredBreakType = 7
+
+[node name="SlamObstacle115" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 424)
+RequiredBreakType = 7
+
+[node name="SlamObstacle116" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 408)
+RequiredBreakType = 7
+
+[node name="SlamObstacle117" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle14" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(400, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle27" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(416, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle28" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(432, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle29" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(448, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle30" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(464, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle31" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(480, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle32" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(496, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle33" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle34" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(528, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle35" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(544, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle36" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(560, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle37" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(576, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle38" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(592, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle39" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(608, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle40" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(624, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle41" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(512, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle42" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(656, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle43" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(672, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle44" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(688, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle45" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(704, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle46" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(720, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle47" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(736, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle48" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle49" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(640, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle50" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(784, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle51" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(800, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle52" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(816, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle53" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(832, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle54" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(848, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle55" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(864, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle56" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(880, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle57" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(768, 280)
+RequiredBreakType = 7
+
+[node name="SlamObstacle58" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(400, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle59" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(416, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle60" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(432, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle61" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(448, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle62" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(464, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle63" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(480, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle64" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(496, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle65" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(384, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle66" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(528, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle67" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(544, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle68" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(560, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle69" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(576, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle70" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(592, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle71" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(608, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle72" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(624, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle73" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(512, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle74" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(656, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle75" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(672, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle76" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(688, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle77" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(704, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle78" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(720, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle79" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(736, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle80" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(752, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle81" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(640, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle82" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(784, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle83" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(800, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle84" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(816, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle85" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(832, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle86" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(848, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle87" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(864, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle88" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(880, 488)
+RequiredBreakType = 7
+
+[node name="SlamObstacle89" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
+position = Vector2(768, 488)
+RequiredBreakType = 7
+
+[node name="Node2D" parent="NavigationRegion2D" instance=ExtResource("5_6kv27")]
+position = Vector2(536, 376)
 
 [node name="Camera2D2" type="Camera2D" parent="."]
 position = Vector2(568, 384)
 zoom = Vector2(3, 3)
 
-[node name="CharacterBody2D" parent="." instance=ExtResource("3_14moa")]
-position = Vector2(560, 336)
-Speed = 100.0
-
-[node name="CharacterBody2D2" parent="." instance=ExtResource("3_14moa")]
-position = Vector2(568, 376)
-
 [node name="CanvasLayer" parent="." instance=ExtResource("5_pakpm")]
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("2_pakpm")]
+position = Vector2(552, 352)
+
+[node name="CharacterBody2D2" parent="." instance=ExtResource("2_pakpm")]
+position = Vector2(584, 360)

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://halxm7rxo2w3"]
+
+[ext_resource type="Script" uid="uid://cpwujh6wja1c5" path="res://scripts/Nest.cs" id="1_8eybi"]
+[ext_resource type="Texture2D" uid="uid://u7eegqwjsmq8" path="res://Assets/Images/Nest.png" id="1_elspc"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_8eybi")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_elspc")

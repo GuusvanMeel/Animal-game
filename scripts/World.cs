@@ -63,18 +63,9 @@ public partial class World : Node
     }
     public void SpawnMob()
     {
-
-
-        float randomFractionY = (float)GD.RandRange(0.1, 0.9); // easier with Godot’s RNG
-                    float randomFractionX = (float)GD.RandRange(0.1, 0.9); // easier with Godot’s RNG
-            Vector2 screenPosToSpawn = new Vector2(
-                GetViewport().GetVisibleRect().Size.X * randomFractionX,
-                GetViewport().GetVisibleRect().Size.Y * randomFractionY
-            );
         var mob = mobScene.Instantiate<Mob>();
         AddChild(mob);
-        var worldPos = camera.GetCanvasTransform().AffineInverse() * screenPosToSpawn;
-        mob.GlobalPosition = worldPos;
+        mob.GlobalPosition = GridManager.CellToWorldCenter(SpawnHelper.GetRandomWalkableCellInCamera(camera));
     }
    
 

@@ -1,15 +1,8 @@
-using Godot;
 using System;
 
-[System.Flags]
-public enum BreakType
-{
-    None  = 0,
-    Slam  = 1 << 0, // 1
-    Cut   = 1 << 1, // 2
-    Burn  = 1 << 2  // 4
-    // Add more if needed: e.g. Freeze = 1 << 3 (8), etc.
-}
+using Godot;
+using Enums;
+
 
 public partial class BreakableObstacle : StaticBody2D
 {
@@ -22,6 +15,7 @@ public partial class BreakableObstacle : StaticBody2D
 
     public override void _Ready()
     {
+        GD.Print(RequiredBreakType);
         sprite = GetNode<Sprite2D>("Sprite2D");
     }
     public void RegisterOnGrid()
@@ -34,7 +28,6 @@ public partial class BreakableObstacle : StaticBody2D
 
         gridCell = GridManager.ToCell(GlobalPosition, GridManager.TileSize);
         GridManager.Grid.SetPointSolid(gridCell, true);
-        GD.Print("Set this block solid!");
     }
 
     public override void _InputEvent(Viewport viewport, InputEvent @event, int shapeIdx)
@@ -79,7 +72,7 @@ public partial class BreakableObstacle : StaticBody2D
 
     public void Break()
     {
-        GD.Print($"{RequiredBreakType} obstacle destroyed!");
+
         GridManager.Grid.SetPointSolid(gridCell, false);
         QueueFree();
     }

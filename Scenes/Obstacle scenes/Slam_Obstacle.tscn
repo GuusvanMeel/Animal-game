@@ -10,6 +10,7 @@ size = Vector2(16, 16)
 collision_layer = 16
 input_pickable = true
 script = ExtResource("1_u0yen")
+RequiredBreakType = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-4.7683716e-07, 1)

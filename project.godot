@@ -19,9 +19,18 @@ config/icon="res://icon.svg"
 
 project/assembly_name="animal game"
 
+[file_customization]
+
+folder_colors={
+"res://Assets/Images/": "red",
+"res://Scenes/": "blue",
+"res://scripts/": "green"
+}
+
 [global_group]
 
 Obstacles="obstacles"
+mobs="Every mob"
 
 [layer_names]
 

@@ -1,30 +1,13 @@
-[gd_scene load_steps=14 format=3 uid="uid://q6qrtx80qfmg"]
+[gd_scene load_steps=10 format=3 uid="uid://ba83gwn0lhipb"]
 
-[ext_resource type="Script" uid="uid://dbbucex8151jx" path="res://scripts/Mob.cs" id="1_bkwno"]
-[ext_resource type="Texture2D" uid="uid://b2lae5qyehp87" path="res://Assets/Animals/Pig/Pig Head.png" id="3_0i86c"]
-[ext_resource type="Texture2D" uid="uid://c3fcpk7lxlmm8" path="res://Assets/Animals/Pig/Legs/Pig Leg Front Short.png" id="4_g65lv"]
-[ext_resource type="Texture2D" uid="uid://85c8korpecxq" path="res://Assets/Animals/Pig/Legs/Pig Leg Front Long.png" id="5_y1iu7"]
-[ext_resource type="Texture2D" uid="uid://c0rlibh5wrb0r" path="res://Assets/Animals/Pig/Legs/Pig Leg Back Short.png" id="6_ba0ss"]
-[ext_resource type="Animation" uid="uid://bcam7wdqf2fgu" path="res://Assets/TestAnim.res" id="7_ba0ss"]
-[ext_resource type="Texture2D" uid="uid://8c2prh4v768m" path="res://Assets/Animals/Pig/Legs/Pig Leg Back Long.png" id="7_m8g21"]
+[ext_resource type="Script" uid="uid://dbbucex8151jx" path="res://scripts/Mob.cs" id="1_7thif"]
+[ext_resource type="Texture2D" uid="uid://b2lae5qyehp87" path="res://Assets/Animals/Pig/Pig Head.png" id="2_vo3ho"]
+[ext_resource type="Texture2D" uid="uid://c3fcpk7lxlmm8" path="res://Assets/Animals/Pig/Legs/Pig Leg Front Short.png" id="3_h8fsi"]
+[ext_resource type="Texture2D" uid="uid://85c8korpecxq" path="res://Assets/Animals/Pig/Legs/Pig Leg Front Long.png" id="4_7c6gu"]
+[ext_resource type="Texture2D" uid="uid://c0rlibh5wrb0r" path="res://Assets/Animals/Pig/Legs/Pig Leg Back Short.png" id="5_g1nnm"]
+[ext_resource type="Texture2D" uid="uid://8c2prh4v768m" path="res://Assets/Animals/Pig/Legs/Pig Leg Back Long.png" id="6_fcmgj"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bkwno"]
-
-[sub_resource type="Animation" id="Animation_5t64o"]
-resource_name = "NoLegJointWalkingAnim"
-loop_mode = 1
-step = 0.016666668
-
-[sub_resource type="Animation" id="Animation_tuhc4"]
-length = 0.001
-step = 0.016666668
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_bsaw0"]
-_data = {
-&"NoLegJointWalkingAnim": SubResource("Animation_5t64o"),
-&"RESET": SubResource("Animation_tuhc4"),
-&"TestAnim": ExtResource("7_ba0ss")
-}
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5t64o"]
 load_path = "res://.godot/imported/Pig Tail.png-534fbd3fba0be970469c41d3d3d30441.ctex"
@@ -32,14 +15,16 @@ load_path = "res://.godot/imported/Pig Tail.png-534fbd3fba0be970469c41d3d3d30441
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bc46m"]
 load_path = "res://.godot/imported/Pig Torso.png-9524cd13411bb024849f90a02a6740dc.ctex"
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["mobs"]]
+scale = Vector2(0.4, 0.4)
 collision_mask = 16
-script = ExtResource("1_bkwno")
-Speed = 20.0
+input_pickable = true
+script = ExtResource("1_7thif")
+Speed = 200.0
 MoveTimeMax = 6.0
 IdleTimeMax = 3.0
 IdleTimeMin = 1.8
-CanBreakType = 7
+CanBreakType = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(9.536743e-07, 0.99999994)
@@ -54,11 +39,6 @@ avoidance_enabled = true
 
 [node name="ActionTimer" type="Timer" parent="."]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_bsaw0")
-}
-
 [node name="Node2D" type="Node2D" parent="."]
 
 [node name="TailSprite" type="Sprite2D" parent="Node2D"]
@@ -70,27 +50,27 @@ texture = SubResource("CompressedTexture2D_5t64o")
 [node name="HeadSprite" type="Sprite2D" parent="Node2D"]
 position = Vector2(-10.749998, -6.8888884)
 scale = Vector2(0.99999994, 0.99999994)
-texture = ExtResource("3_0i86c")
+texture = ExtResource("2_vo3ho")
 
 [node name="FrontShortLeg" type="Sprite2D" parent="Node2D"]
 position = Vector2(-6.749999, 10.999999)
 scale = Vector2(0.9999998, 0.9999998)
-texture = ExtResource("4_g65lv")
+texture = ExtResource("3_h8fsi")
 
 [node name="FrontLongLeg" type="Sprite2D" parent="Node2D"]
 position = Vector2(-9.749998, 8.999999)
 scale = Vector2(0.9999998, 0.9999998)
-texture = ExtResource("5_y1iu7")
+texture = ExtResource("4_7c6gu")
 
 [node name="HindShortLeg" type="Sprite2D" parent="Node2D"]
 position = Vector2(6.2500005, 9.999999)
 scale = Vector2(0.9999998, 0.9999998)
-texture = ExtResource("6_ba0ss")
+texture = ExtResource("5_g1nnm")
 
 [node name="HindLongLeg" type="Sprite2D" parent="Node2D"]
 position = Vector2(10.25, 8)
 scale = Vector2(0.99999976, 0.99999976)
-texture = ExtResource("7_m8g21")
+texture = ExtResource("6_fcmgj")
 
 [node name="TorsoSprite" type="Sprite2D" parent="Node2D"]
 position = Vector2(0.25000092, 1.1111109)

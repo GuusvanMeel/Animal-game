@@ -4,7 +4,7 @@ using Godot;
 using Enums;
 
 
-public partial class BreakableObstacle : StaticBody2D
+public partial class BreakableObstacle : WorldObject
 {
     [Export] public BreakType RequiredBreakType { get; set; }
 
@@ -15,33 +15,23 @@ public partial class BreakableObstacle : StaticBody2D
 
     public override void _Ready()
     {
+        base._Ready();
         GD.Print(RequiredBreakType);
         sprite = GetNode<Sprite2D>("Sprite2D");
-    }
-    public void RegisterOnGrid()
-    {
-        if (GridManager.Grid == null)
-        {
-            GD.Print("Grid not ready yet for obstacle!");
-            return;
-        }
+        
+        var area = GetNode<Area2D>("Area2D");
+        area.InputEvent += OnAreaInputEvent;
+    
+}
 
-        gridCell = GridManager.ToCell(GlobalPosition, GridManager.TileSize);
-        GridManager.Grid.SetPointSolid(gridCell, true);
-    }
-
-    public override void _InputEvent(Viewport viewport, InputEvent @event, int shapeIdx)
+    private void OnAreaInputEvent(Node viewport, InputEvent @event, long shapeIdx)
     {
         if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
         {
             if (!clicked)
-            {
                 RequestBreaker();
-            }
             else
-            {
-                DismissBreaker();                
-            }
+                DismissBreaker();
         }
     }
 
@@ -76,4 +66,10 @@ public partial class BreakableObstacle : StaticBody2D
         GridManager.Grid.SetPointSolid(gridCell, false);
         QueueFree();
     }
+
+    public override void Interact(Mob mob)
+    {
+        throw new NotImplementedException();
+    }
+
 }

@@ -16,6 +16,7 @@ namespace Enums
     {
         Male,
         Female,
-Both
+        Both
     }
+
 }

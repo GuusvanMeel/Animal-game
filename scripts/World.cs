@@ -9,16 +9,16 @@ public partial class World : Node
     [Export] PackedScene mobScene;
     [Export] private Camera2D camera;
 
-    public override void _Ready()
+    public override void _EnterTree()
     {   
         TileMapLayer tilemap = GetNode<TileMapLayer>("NavigationRegion2D/Ground");
-        GridManager.InitializeGrid(new Vector2I(200, 200), 16, (Vector2I)(tilemap.Position / 16f));
+        GridManager.InitializeGrid(new Vector2I(200, 200), (Vector2I)(tilemap.Position / 16f));
         GridManager.Grid.Update();
-        foreach (BreakableObstacle obstacle in GetTree().GetNodesInGroup("Obstacles"))
-        {
-            Console.WriteLine("Here");  
-            obstacle.RegisterOnGrid();
-        }
+        // foreach (BreakableObstacle obstacle in GetTree().GetNodesInGroup("Obstacles"))
+        // {
+        //     Console.WriteLine("Here");  
+            // obstacle.RegisterOnGrid();
+        // }
        
     }
 
@@ -31,8 +31,8 @@ public partial class World : Node
         {
             if (mob is Mob m && (m.CanBreakType & target.RequiredBreakType) != 0 && m.WalkingToTarget == false) // Check if the mob has correct type, and if its occupied
             {
-                Vector2I mobCell = GridManager.ToCell(m.GlobalPosition, GridManager.TileSize);
-                Vector2I targetCell = GridManager.ToCell(target.GlobalPosition, GridManager.TileSize); //transform mob and targetlocations into vector2I to be used in an astargrid
+                Vector2I mobCell = GridManager.ToCell(m.GlobalPosition);
+                Vector2I targetCell = GridManager.ToCell(target.GlobalPosition); //transform mob and targetlocations into vector2I to be used in an astargrid
 
                 var path = GridManager.Grid.GetPointPath(mobCell, targetCell);
 

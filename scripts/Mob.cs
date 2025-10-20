@@ -61,7 +61,7 @@ public partial class Mob : CharacterBody2D
             {
               
                 clicked = true;
-                LookingForMate();
+                GoingToNest();
 
             }
             else
@@ -70,21 +70,22 @@ public partial class Mob : CharacterBody2D
             }
         }
     }
-    private void LookingForMate()
+    private void GoingToNest()
     {
         //check if any other mobs in the scene are looking for a mate, if yes, choose the closest mob and make them walk to each other. meet in the middle type shit, or meet near the nearest Nest
         sprite.Modulate = Colors.Red;
+        
+
     }
     public override void _PhysicsProcess(double delta)
     {
 
         if (IsBreaking)
         {
-            if (Velocity != Vector2.Zero)
-            {
-                Velocity = Vector2.Zero;
 
-            }
+            Velocity = Vector2.Zero;
+
+
 
             return;
         }
@@ -183,13 +184,13 @@ public partial class Mob : CharacterBody2D
         Vector2[] bestPath = null;
         foreach (var offset in SurroundOffsets)
         {
-            Vector2I targetCell = GridManager.ToCell(target.GlobalPosition, GridManager.TileSize);
+            Vector2I targetCell = GridManager.ToCell(target.GlobalPosition);
             Vector2I neighborCell = targetCell + offset;
 
             if (!GridManager.Grid.IsPointSolid(neighborCell))
             {
                 // This neighbor is walkable, test path to it
-                Vector2I mobCell = GridManager.ToCell(GlobalPosition, GridManager.TileSize);
+                Vector2I mobCell = GridManager.ToCell(GlobalPosition);
                 Vector2[] path = GridManager.Grid.GetPointPath(mobCell, neighborCell);
 
                 if (path.Length > 0)

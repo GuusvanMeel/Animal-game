@@ -11,6 +11,7 @@ collision_layer = 16
 input_pickable = true
 script = ExtResource("1_u0yen")
 RequiredBreakType = 1
+BlocksPath = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-4.7683716e-07, 1)
@@ -23,3 +24,8 @@ shape = SubResource("RectangleShape2D_u0yen")
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
 vertices = PackedVector2Array(8, 8, 8, -8, -8, -8, -8, 8)
 affect_navigation_mesh = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_u0yen")

@@ -13,7 +13,7 @@ public static class SpawnHelper
                     camera.GetViewport().GetVisibleRect().Size.Y * randomFractionY
                 );
                 var worldPos = camera.GetCanvasTransform().AffineInverse() * screenPosToSpawn;
-                Vector2I cell  = GridManager.ToCell(worldPos, GridManager.TileSize);
+                Vector2I cell  = GridManager.ToCell(worldPos);
 
             if (GridManager.IsObstacle(cell))
                 return cell;

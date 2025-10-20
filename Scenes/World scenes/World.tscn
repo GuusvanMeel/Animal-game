@@ -29,22 +29,6 @@ tile_set = ExtResource("1_d34w8")
 position = Vector2(520, 408)
 RequiredBreakType = 7
 
-[node name="SlamObstacle9" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(504, 312)
-RequiredBreakType = 7
-
-[node name="SlamObstacle10" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(520, 312)
-RequiredBreakType = 7
-
-[node name="SlamObstacle11" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(536, 312)
-RequiredBreakType = 7
-
-[node name="SlamObstacle12" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(552, 312)
-RequiredBreakType = 7
-
 [node name="SlamObstacle13" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(568, 312)
 RequiredBreakType = 7
@@ -153,10 +137,6 @@ RequiredBreakType = 7
 position = Vector2(384, 392)
 RequiredBreakType = 7
 
-[node name="SlamObstacle97" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(384, 392)
-RequiredBreakType = 7
-
 [node name="SlamObstacle98" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(384, 456)
 RequiredBreakType = 7
@@ -175,10 +155,6 @@ RequiredBreakType = 7
 
 [node name="SlamObstacle102" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(384, 408)
-RequiredBreakType = 7
-
-[node name="SlamObstacle103" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(384, 488)
 RequiredBreakType = 7
 
 [node name="SlamObstacle104" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
@@ -233,10 +209,6 @@ RequiredBreakType = 7
 position = Vector2(752, 408)
 RequiredBreakType = 7
 
-[node name="SlamObstacle117" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(752, 488)
-RequiredBreakType = 7
-
 [node name="SlamObstacle14" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(400, 280)
 RequiredBreakType = 7
@@ -263,10 +235,6 @@ RequiredBreakType = 7
 
 [node name="SlamObstacle32" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(496, 280)
-RequiredBreakType = 7
-
-[node name="SlamObstacle33" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(384, 280)
 RequiredBreakType = 7
 
 [node name="SlamObstacle34" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
@@ -317,18 +285,6 @@ RequiredBreakType = 7
 position = Vector2(704, 280)
 RequiredBreakType = 7
 
-[node name="SlamObstacle46" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(720, 280)
-RequiredBreakType = 7
-
-[node name="SlamObstacle47" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(736, 280)
-RequiredBreakType = 7
-
-[node name="SlamObstacle48" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(752, 280)
-RequiredBreakType = 7
-
 [node name="SlamObstacle49" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(640, 280)
 RequiredBreakType = 7
@@ -361,10 +317,6 @@ RequiredBreakType = 7
 position = Vector2(880, 280)
 RequiredBreakType = 7
 
-[node name="SlamObstacle57" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(768, 280)
-RequiredBreakType = 7
-
 [node name="SlamObstacle58" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(400, 488)
 RequiredBreakType = 7
@@ -391,10 +343,6 @@ RequiredBreakType = 7
 
 [node name="SlamObstacle64" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(496, 488)
-RequiredBreakType = 7
-
-[node name="SlamObstacle65" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(384, 488)
 RequiredBreakType = 7
 
 [node name="SlamObstacle66" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
@@ -449,14 +397,6 @@ RequiredBreakType = 7
 position = Vector2(720, 488)
 RequiredBreakType = 7
 
-[node name="SlamObstacle79" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(736, 488)
-RequiredBreakType = 7
-
-[node name="SlamObstacle80" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(752, 488)
-RequiredBreakType = 7
-
 [node name="SlamObstacle81" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(640, 488)
 RequiredBreakType = 7
@@ -487,10 +427,6 @@ RequiredBreakType = 7
 
 [node name="SlamObstacle88" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
 position = Vector2(880, 488)
-RequiredBreakType = 7
-
-[node name="SlamObstacle89" parent="NavigationRegion2D" instance=ExtResource("4_g6er4")]
-position = Vector2(768, 488)
 RequiredBreakType = 7
 
 [node name="Node2D" parent="NavigationRegion2D" instance=ExtResource("5_6kv27")]

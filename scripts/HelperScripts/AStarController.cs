@@ -5,6 +5,8 @@ public static class GridManager
 {
     public static AStarGrid2D Grid { get; private set; }
     public static Dictionary<Vector2I, WorldObject> GridObjects = new();
+    public static List<WorldObject> nests = new();
+    public static List<WorldObject> obstacles = new();
     public static int TileSize = 16;
     public static void InitializeGrid(Vector2I size, Vector2I offset)
     {
@@ -46,9 +48,9 @@ public static class GridManager
     public static void RegisterObject(WorldObject obj)
     {  
         GridObjects.Add(obj.GridCell, obj);
-        
-        if (obj.BlocksPath)
-        
+        if (obj is Nest) nests.Add(obj);
+        if (obj is BreakableObstacle) obstacles.Add(obj);
+        if (obj.BlocksPath)        
         {
             Grid.SetPointSolid(obj.GridCell, obj.BlocksPath);
         }

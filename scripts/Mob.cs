@@ -74,7 +74,6 @@ public partial class Mob : CharacterBody2D
     {
         //check if any other mobs in the scene are looking for a mate, if yes, choose the closest mob and make them walk to each other. meet in the middle type shit, or meet near the nearest Nest
         sprite.Modulate = Colors.Red;
-        
 
     }
     public override void _PhysicsProcess(double delta)

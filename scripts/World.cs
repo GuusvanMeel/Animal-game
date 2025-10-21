@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
@@ -66,6 +67,20 @@ public partial class World : Node
         var mob = mobScene.Instantiate<Mob>();
         AddChild(mob);
         mob.GlobalPosition = GridManager.CellToWorldCenter(SpawnHelper.GetRandomWalkableCellInCamera(camera));
+    }
+    public void AssignMobToNest(Mob mob)
+    {
+
+        foreach (Nest nest in GridManager.nests)
+        {
+            if (nest.CanAccept(mob))
+            {
+                nest.AssignMob(mob);
+                
+                break;
+            }
+        }
+        
     }
    
 

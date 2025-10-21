@@ -14,8 +14,7 @@ public partial class BreakableObstacle : WorldObject
     private Vector2I gridCell;
 
     public override void _Ready()
-    {
-        base._Ready();
+    {   base._Ready();
         GD.Print(RequiredBreakType);
         sprite = GetNode<Sprite2D>("Sprite2D");
         
@@ -60,16 +59,12 @@ public partial class BreakableObstacle : WorldObject
         clicked = false;
     }
 
-    public void Break()
-    {
-
-        GridManager.Grid.SetPointSolid(gridCell, false);
-        QueueFree();
-    }
-
     public override void Interact(Mob mob)
     {
-        throw new NotImplementedException();
+        GridManager.Grid.SetPointSolid(gridCell, false);
+        GridManager.GridObjects.Remove(this.gridCell);
+        QueueFree();
+        GridManager.Grid.Update();
     }
 
 }

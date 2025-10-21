@@ -16,5 +16,5 @@ public abstract partial class WorldObject : Node2D
             GD.Print($"{Name} registering at {GridCell} (GlobalPos={GlobalPosition})");
         GridManager.RegisterObject(this);
     }
-    public abstract void Interact(Mob mob);
+    public abstract void Interact(Mob mob = null);
 }

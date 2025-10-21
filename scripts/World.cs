@@ -18,9 +18,8 @@ public partial class World : Node
         // foreach (BreakableObstacle obstacle in GetTree().GetNodesInGroup("Obstacles"))
         // {
         //     Console.WriteLine("Here");  
-            // obstacle.RegisterOnGrid();
+        // obstacle.RegisterOnGrid();
         // }
-       
     }
 
     public Mob AssignMobToObstacle(BreakableObstacle target)
@@ -49,7 +48,7 @@ public partial class World : Node
         if (nearest != null)
         {
             GD.Print($"Assigning {nearest.Name} to break {target.Name}");
-            bool succes = nearest.GoToWork(target);
+            bool succes = nearest.GoToTarget(target);
             if (succes == false)
             {
                 GD.Print("Nearest couldnt find a path");

@@ -14,7 +14,7 @@ public partial class Mob : CharacterBody2D
     [Export] public Gender gender{ get; set; }
 
 
-    private BreakableObstacle currentTarget;
+    private WorldObject currentTarget;
     private Node2D skeleton;
     private Timer idleTimer;
     private Timer actionTimer;
@@ -26,7 +26,7 @@ public partial class Mob : CharacterBody2D
     private Vector2[] currentPath;
     private int pathIndex;
     public bool WalkingToTarget = false;
-    private bool IsBreaking = false;
+    private bool TargetReached = false;
 
     private static readonly Vector2I[] SurroundOffsets = new Vector2I[]
 {
@@ -74,18 +74,13 @@ public partial class Mob : CharacterBody2D
     {
         //check if any other mobs in the scene are looking for a mate, if yes, choose the closest mob and make them walk to each other. meet in the middle type shit, or meet near the nearest Nest
         sprite.Modulate = Colors.Red;
-
     }
     public override void _PhysicsProcess(double delta)
     {
 
-        if (IsBreaking)
+        if (TargetReached)
         {
-
             Velocity = Vector2.Zero;
-
-
-
             return;
         }
 
@@ -103,6 +98,17 @@ public partial class Mob : CharacterBody2D
                 GD.Print("Collided");
                 StopMoving();
             }
+        Vector2I cell = GridManager.ToCell(GlobalPosition);
+        if (!GridManager.Grid.Region.HasPoint(cell))
+        {
+           
+            cell = GridManager.ClampToBounds(cell);
+            GlobalPosition = GridManager.CellToWorldCenter(cell);
+
+            // Optional: bounce away from edge instead of freezing
+            direction = -direction.Rotated((float)GD.RandRange(-0.2, 0.2));
+            StopMoving();
+        }
         }
         else
         {
@@ -178,7 +184,7 @@ public partial class Mob : CharacterBody2D
         idleTimer.Start();
     }
 
-    public bool GoToWork(BreakableObstacle target)
+    public bool GoToTarget(WorldObject target)
     {
         Vector2[] bestPath = null;
         foreach (var offset in SurroundOffsets)
@@ -234,15 +240,13 @@ public partial class Mob : CharacterBody2D
     {
         sprite.Modulate = Colors.White;
 
-        IsBreaking = false;
+        TargetReached = false;
         currentTarget = null;
         WalkingToTarget = false;
     }
     private void OnTargetReached()
     {
-        IsBreaking = true;
-
-
+        TargetReached = true;
         if (currentTarget != null)
         {
             actionTimer.Start(3.0);
@@ -253,11 +257,9 @@ public partial class Mob : CharacterBody2D
     {
         if (currentTarget != null)
         {
-            currentTarget.Break(); // call obstacle’s break method
+            currentTarget.Interact(); // call obstacle’s break method
         }
-
         WorkDismissed();
-
     }
 }
    

@@ -59,12 +59,13 @@ public partial class BreakableObstacle : WorldObject
         clicked = false;
     }
 
-    public override void Interact(Mob mob)
+    public override bool Interact(Mob mob)
     {
         GridManager.Grid.SetPointSolid(gridCell, false);
         GridManager.GridObjects.Remove(this.gridCell);
         QueueFree();
         GridManager.Grid.Update();
+        return true;
     }
 
 }

@@ -443,3 +443,4 @@ position = Vector2(552, 352)
 
 [node name="CharacterBody2D2" parent="." instance=ExtResource("2_pakpm")]
 position = Vector2(584, 360)
+gender = 2

@@ -68,19 +68,30 @@ public static class GridManager
         }
     }
     public static Vector2I ClampToBounds(Vector2I cell)
-{
-    if (Grid == null)
     {
-        GD.PrintErr("⚠️ Tried to clamp before grid was initialized!");
-        return cell;
+        if (Grid == null)
+        {
+            GD.PrintErr("⚠️ Tried to clamp before grid was initialized!");
+            return cell;
+        }
+
+        var region = Grid.Region;
+
+        int clampedX = Mathf.Clamp(cell.X, region.Position.X, region.End.X - 1);
+        int clampedY = Mathf.Clamp(cell.Y, region.Position.Y, region.End.Y - 1);
+
+        return new Vector2I(clampedX, clampedY);
+    }
+     public static float GetPathLength(Vector2[] path)
+{
+    float total = 0f;
+
+    for (int i = 0; i < path.Length - 1; i++)
+    {
+        total += path[i].DistanceTo(path[i + 1]);
     }
 
-    var region = Grid.Region;
-
-    int clampedX = Mathf.Clamp(cell.X, region.Position.X, region.End.X - 1);
-    int clampedY = Mathf.Clamp(cell.Y, region.Position.Y, region.End.Y - 1);
-
-    return new Vector2I(clampedX, clampedY);
+    return total;
 }
   
 }

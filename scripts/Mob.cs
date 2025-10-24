@@ -26,7 +26,7 @@ public partial class Mob : CharacterBody2D
     private Vector2[] currentPath;
     private int pathIndex;
     public bool WalkingToTarget = false;
-    private bool TargetReached = false;
+    public bool HasToStop = false;
 
     private static readonly Vector2I[] SurroundOffsets = new Vector2I[]
 {
@@ -34,7 +34,7 @@ public partial class Mob : CharacterBody2D
     new Vector2I(-1,  0),                     new Vector2I(1,  0),
     new Vector2I(-1,  1), new Vector2I(0,  1), new Vector2I(1,  1),
 };
-    private bool clicked = false;
+    public bool clicked = false;
     public override void _Ready()
     {
 
@@ -45,8 +45,6 @@ public partial class Mob : CharacterBody2D
         actionTimer = GetNode<Timer>("ActionTimer");
         skeleton = GetNode<Node2D>("Node2D");
         
-        actionTimer.OneShot = true;
-        actionTimer.Timeout += OnActionFinished;
         idleTimer.Timeout += OnidleTimeout;
         float IdleTime = rng.RandfRange(IdleTimeMin, IdleTimeMax);
 
@@ -58,27 +56,33 @@ public partial class Mob : CharacterBody2D
         if (@event is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Right)
         {     GD.Print("HERE");
             if (!clicked)
-            {
-              
+            {              
                 clicked = true;
-                GoingToNest();
-
+                ChooseNest();
             }
             else
             {
                 clicked = false;
+                
             }
         }
     }
-    private void GoingToNest()
+    private void ChooseNest()
     {
         //check if any other mobs in the scene are looking for a mate, if yes, choose the closest mob and make them walk to each other. meet in the middle type shit, or meet near the nearest Nest
-        sprite.Modulate = Colors.Red;
+        World world = GetTree().CurrentScene as World;
+        
+        Nest nest = world.AssignMobToNest(this);
+        if(nest != null)
+        {
+            sprite.Modulate = Colors.Red;
+            GoToTarget(nest);
+        }
     }
     public override void _PhysicsProcess(double delta)
     {
 
-        if (TargetReached)
+        if (HasToStop)
         {
             Velocity = Vector2.Zero;
             return;
@@ -200,9 +204,9 @@ public partial class Mob : CharacterBody2D
 
                 if (path.Length > 0)
                 {
-                    float totalDistance = GetPathLength(path);
+                    float totalDistance = GridManager.GetPathLength(path);
 
-                    if (bestPath == null || totalDistance < GetPathLength(bestPath))
+                    if (bestPath == null || totalDistance < GridManager.GetPathLength(bestPath))
                     {
                         bestPath = path;
                     }
@@ -225,41 +229,20 @@ public partial class Mob : CharacterBody2D
                 }
         return false;
     }
-       private float GetPathLength(Vector2[] path)
-{
-    float total = 0f;
-
-    for (int i = 0; i < path.Length - 1; i++)
-    {
-        total += path[i].DistanceTo(path[i + 1]);
-    }
-
-    return total;
-}
+  
     public void WorkDismissed()
     {
         sprite.Modulate = Colors.White;
-
-        TargetReached = false;
         currentTarget = null;
         WalkingToTarget = false;
     }
     private void OnTargetReached()
     {
-        TargetReached = true;
-        if (currentTarget != null)
+        if (currentTarget.Interact(this))
         {
-            actionTimer.Start(3.0);
+            WorkDismissed();
         }
     }
- 
-    private void OnActionFinished()
-    {
-        if (currentTarget != null)
-        {
-            currentTarget.Interact(); // call obstacle’s break method
-        }
-        WorkDismissed();
-    }
+    
 }
    

@@ -12,7 +12,6 @@ public partial class HUD : CanvasLayer
     }
     private void OnBreedPressed()
     {
-
         GetParent().Call("SpawnMob");
     }
 

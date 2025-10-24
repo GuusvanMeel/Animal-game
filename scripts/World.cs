@@ -9,41 +9,61 @@ public partial class World : Node
 {
     [Export] PackedScene mobScene;
     [Export] private Camera2D camera;
+        private static readonly Vector2I[] SurroundOffsets = new Vector2I[]
+{
+    new Vector2I(-1, -1), new Vector2I(0, -1), new Vector2I(1, -1),
+    new Vector2I(-1,  0),                     new Vector2I(1,  0),
+    new Vector2I(-1,  1), new Vector2I(0,  1), new Vector2I(1,  1),
+};
 
     public override void _EnterTree()
     {   
         TileMapLayer tilemap = GetNode<TileMapLayer>("NavigationRegion2D/Ground");
         GridManager.InitializeGrid(new Vector2I(200, 200), (Vector2I)(tilemap.Position / 16f));
         GridManager.Grid.Update();
-        // foreach (BreakableObstacle obstacle in GetTree().GetNodesInGroup("Obstacles"))
-        // {
-        //     Console.WriteLine("Here");  
-        // obstacle.RegisterOnGrid();
-        // }
     }
 
-    public Mob AssignMobToObstacle(BreakableObstacle target)
+   public Mob AssignMobToObstacle(BreakableObstacle target)
+{
+    Mob nearest = null;
+    float bestDist = float.MaxValue;
+
+    Vector2I targetCell = GridManager.ToCell(target.GlobalPosition);
+
+    foreach (var mobNode in GetTree().GetNodesInGroup("mobs"))
     {
-        Mob nearest = null;
-        int bestDist = int.MaxValue;
-        
-        foreach (var mob in GetTree().GetNodesInGroup("mobs")) //get all the mobs in the scene.
+        if (mobNode is Mob m && (m.CanBreakType & target.RequiredBreakType) != 0 && !m.WalkingToTarget)
         {
-            if (mob is Mob m && (m.CanBreakType & target.RequiredBreakType) != 0 && m.WalkingToTarget == false) // Check if the mob has correct type, and if its occupied
+            Vector2I mobCell = GridManager.ToCell(m.GlobalPosition);
+            Vector2[] bestPath = null;
+
+            // 🔹 try to find a walkable neighbor near the obstacle
+            foreach (var offset in SurroundOffsets)
             {
-                Vector2I mobCell = GridManager.ToCell(m.GlobalPosition);
-                Vector2I targetCell = GridManager.ToCell(target.GlobalPosition); //transform mob and targetlocations into vector2I to be used in an astargrid
+                Vector2I neighborCell = targetCell + offset;
+                if (GridManager.Grid.IsPointSolid(neighborCell))
+                    continue;
 
-                var path = GridManager.Grid.GetPointPath(mobCell, targetCell);
+                Vector2[] path = GridManager.Grid.GetPointPath(mobCell, neighborCell);
+                if (path.Length == 0)
+                    continue;
 
-                int dist = path.Length;
-                if (dist < bestDist) //cycles through all the mobs, lowest distance mob gets the job.
+                float totalDist = GridManager.GetPathLength(path);
+                if (bestPath == null || totalDist < GridManager.GetPathLength(bestPath))
+                    bestPath = path;
+            }
+
+            if (bestPath != null)
+            {
+                float totalDist = GridManager.GetPathLength(bestPath);
+                if (totalDist < bestDist)
                 {
-                    bestDist = dist;
+                    bestDist = totalDist;
                     nearest = m;
                 }
             }
         }
+    }
 
         if (nearest != null)
         {
@@ -67,18 +87,18 @@ public partial class World : Node
         AddChild(mob);
         mob.GlobalPosition = GridManager.CellToWorldCenter(SpawnHelper.GetRandomWalkableCellInCamera(camera));
     }
-    public void AssignMobToNest(Mob mob)
+    public Nest AssignMobToNest(Mob mob)
     {
 
         foreach (Nest nest in GridManager.nests)
         {
             if (nest.CanAccept(mob))
             {
-                nest.AssignMob(mob);
-                
-                break;
+                return nest.AssignMob(mob);
+
             }
         }
+        return null;
         
     }
    

@@ -5,6 +5,7 @@ public partial class Nest : WorldObject
     public Mob Manimal { get; private set; }
     public Mob Fanimal { get; private set; }
     public Mob Zanimal { get; private set; }
+    [Export] PackedScene mobScene;
 
     // 🔒 Full = two compatible occupants
     public bool IsFull => OccupantCount >= 2;
@@ -38,12 +39,12 @@ public partial class Nest : WorldObject
                 return false;
         }
     }
-    public void AssignMob(Mob mob)
-    {
+    public Nest AssignMob(Mob mob)
+    {   
         switch (mob.gender)
         {
             case Enums.Gender.Male:
-                Manimal = mob;
+                Manimal = mob;                
                 break;
             case Enums.Gender.Female:
                 Fanimal = mob;
@@ -52,11 +53,26 @@ public partial class Nest : WorldObject
                 Zanimal = mob;
                 break;
         }
+        return this;
     }
 
-    public override void Interact(Mob mob)
+    public override bool Interact(Mob mob)
     {
-        throw new System.NotImplementedException();
+        mob.HasToStop = true;
+        if (IsFull)
+        {
+            var child = mobScene.Instantiate<Mob>();
+            AddChild(child);
+            child.GlobalPosition = this.GlobalPosition;
+            Clear();
+        }
+        return true;
     }
+ private void Clear()
+{
+    if (Manimal is { } m) { m.HasToStop = false; m.clicked = false; Manimal = null; }
+    if (Fanimal is { } f) { f.HasToStop = false;f.clicked = false; Fanimal = null; }
+    if (Zanimal is { } z) { z.HasToStop = false;z.clicked = false; Zanimal = null; }
+}
 
 }
